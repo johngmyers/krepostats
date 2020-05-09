@@ -18,7 +18,7 @@ type options struct {
 func gatherOptions() options {
 	o := options{}
 	fs := flag.NewFlagSet(os.Args[0], flag.ExitOnError)
-	fs.StringVar(&o.TokenPath, "github-token-path", "github.secret", "Path to the file containing the GitHub OAuth secret.")
+	fs.StringVar(&o.TokenPath, "github-token-path", "github.token", "Path to the file containing the GitHub OAuth secret.")
 
 	fs.Parse(os.Args[1:])
 	return o
@@ -40,8 +40,8 @@ func main() {
 	censor := func(c []byte) []byte {
 		return bytes.ReplaceAll(c, token, []byte("CENSORED"))
 	}
-	githubClient := github.NewClientWithFields(logrus.Fields{}, tokenGenerator, censor, github.DefaultAPIEndpoint, github.DefaultAPIEndpoint)
-	githubClient.Throttle(360, 360)
+	githubClient := github.NewClientWithFields(logrus.Fields{}, tokenGenerator, censor, github.DefaultGraphQLEndpoint, github.DefaultAPIEndpoint)
+	githubClient.Throttle(3500, 1000)
 
 	stats := &krepostats.KRepoStats{
 		GHC: githubClient,
