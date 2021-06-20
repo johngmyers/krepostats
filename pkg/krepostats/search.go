@@ -30,15 +30,14 @@ import (
 )
 
 var owners = []string{
-	"justinsb",
-	"chrislovecnm",
 	"geojaz",
+	"hakman",
+	"johngmyers",
+	"justinsb",
 	"kashifsaadat",
-	"gambol99",
 	"mikesplain",
-	"chrisz100",
+	"olemarkus",
 	"rdrgmnzs",
-	"granular-ryanbonham",
 	"rifelpet",
 	"zetaab",
 }
@@ -83,7 +82,7 @@ func (k *KRepoStats) Run() {
 	numReviews := map[string]int{}
 
 	var query bytes.Buffer
-	fmt.Fprint(&query, "is:pr repo:kubernetes/kops updated:2019-05-01..2020-05-01")
+	fmt.Fprint(&query, "is:pr repo:kubernetes/kops updated:2020-06-01..2021-06-01")
 
 	var ret []pullRequest
 	vars := map[string]interface{}{
