@@ -83,8 +83,7 @@ func (k *KRepoStats) Run() {
 	numReviews := map[string]int{}
 
 	var query bytes.Buffer
-	fmt.Fprint(&query, "is:pr repo:kubernetes/kops updated:2021-05-01..2021-06-01")
-	//	fmt.Fprint(&query, "is:pr repo:kubernetes/kops updated:2020-06-01..2021-06-01")
+	fmt.Fprint(&query, "is:pr repo:kubernetes/kops updated:2020-07-01..2021-07-01")
 
 	var ret []pullRequest
 	vars := map[string]interface{}{
@@ -116,7 +115,7 @@ func (k *KRepoStats) Run() {
 		approvers := map[string]bool{}
 
 		if ownersmap[string(pr.Author.Login)] {
-			approvers[string(pr.Author.Login)] = true
+			// approvers[string(pr.Author.Login)] = true
 		}
 
 		reviews, err := k.GHC.ListReviews("kubernetes", "kops", int(pr.Number))
