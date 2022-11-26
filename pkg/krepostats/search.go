@@ -83,7 +83,7 @@ func (k *KRepoStats) Run() {
 	numReviews := map[string]int{}
 
 	var query bytes.Buffer
-	fmt.Fprint(&query, "is:pr repo:kubernetes/kops updated:2020-07-01..2021-07-01")
+	fmt.Fprint(&query, "is:pr repo:kubernetes/kops updated:2021-09-25..2022-09-25")
 
 	var ret []pullRequest
 	vars := map[string]interface{}{
