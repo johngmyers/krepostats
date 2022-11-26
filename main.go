@@ -3,7 +3,6 @@ package main
 import (
 	"bytes"
 	"flag"
-	"io/ioutil"
 	"os"
 
 	"github.com/johngmyers/krepostats/pkg/krepostats"
@@ -29,7 +28,7 @@ func main() {
 
 	logrus.SetLevel(logrus.InfoLevel)
 
-	token, err := ioutil.ReadFile(o.TokenPath)
+	token, err := os.ReadFile(o.TokenPath)
 	if err != nil {
 		logrus.Fatalf("error reading %s: %v", o.TokenPath, err)
 	}
