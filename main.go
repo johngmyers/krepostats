@@ -39,7 +39,10 @@ func main() {
 	censor := func(c []byte) []byte {
 		return bytes.ReplaceAll(c, token, []byte("CENSORED"))
 	}
-	githubClient := github.NewClientWithFields(logrus.Fields{}, tokenGenerator, censor, github.DefaultGraphQLEndpoint, github.DefaultAPIEndpoint)
+	githubClient, err := github.NewClientWithFields(logrus.Fields{}, tokenGenerator, censor, github.DefaultGraphQLEndpoint, github.DefaultAPIEndpoint)
+	if err != nil {
+		logrus.Fatalf("error creating client: %v", err)
+	}
 	githubClient.Throttle(3500, 1000)
 
 	stats := &krepostats.KRepoStats{

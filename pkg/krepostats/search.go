@@ -98,7 +98,7 @@ func (k *KRepoStats) Run() {
 	var remaining int
 	for {
 		sq := searchQuery{}
-		if err := k.GHC.Query(context.TODO(), &sq, vars); err != nil {
+		if err := k.GHC.QueryWithGitHubAppsSupport(context.TODO(), &sq, vars, org); err != nil {
 			klog.Fatalf("query failed: %v", err)
 		}
 		totalCost += int(sq.RateLimit.Cost)
@@ -136,7 +136,7 @@ func (k *KRepoStats) Run() {
 			}
 		}
 
-		comments, err := k.GHC.ListPullRequestComments(org, repo, int(pr.Number))
+		comments, err := k.GHC.ListIssueComments(org, repo, int(pr.Number))
 		if err != nil {
 			klog.Fatalf("list comments on %d failed: %v", pr.Number, err)
 		}
