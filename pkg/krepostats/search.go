@@ -30,17 +30,21 @@ import (
 )
 
 var owners = []string{
-	"geojaz",
-	"hakman",
+	//"hakman",
+	//"johngmyers",
+	//"justinsb",
+	//"olemarkus",
+	//"rifelpet",
+	//"zetaab",
 	"johngmyers",
-	"justinsb",
-	"kashifsaadat",
-	"mikesplain",
-	"olemarkus",
-	"rdrgmnzs",
-	"rifelpet",
-	"zetaab",
+	"raffo",
+	"njuettner",
+	"seanmalloy",
+	"szuecs",
 }
+
+const org = "kubernetes-sigs"
+const repo = "external-dns"
 
 type KRepoStats struct {
 	GHC github.Client
@@ -83,7 +87,7 @@ func (k *KRepoStats) Run() {
 	numReviews := map[string]int{}
 
 	var query bytes.Buffer
-	fmt.Fprint(&query, "is:pr repo:kubernetes/kops updated:2021-09-25..2022-09-25")
+	fmt.Fprintf(&query, "is:pr repo:%s/%s updated:2022-09-01..2023-09-01", org, repo)
 
 	var ret []pullRequest
 	vars := map[string]interface{}{
@@ -118,7 +122,7 @@ func (k *KRepoStats) Run() {
 			// approvers[string(pr.Author.Login)] = true
 		}
 
-		reviews, err := k.GHC.ListReviews("kubernetes", "kops", int(pr.Number))
+		reviews, err := k.GHC.ListReviews(org, repo, int(pr.Number))
 		if err != nil {
 			klog.Fatalf("list reviews on %d failed: %v", pr.Number, err)
 		}
@@ -132,7 +136,7 @@ func (k *KRepoStats) Run() {
 			}
 		}
 
-		comments, err := k.GHC.ListPullRequestComments("kubernetes", "kops", int(pr.Number))
+		comments, err := k.GHC.ListPullRequestComments(org, repo, int(pr.Number))
 		if err != nil {
 			klog.Fatalf("list comments on %d failed: %v", pr.Number, err)
 		}
